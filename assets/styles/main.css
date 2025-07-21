@@ -1,0 +1,17 @@
+:root {
+    --font: 'DM Sans', sans-serif;
+    --bg-color: white;
+    --bg-inverse-color: black;
+    --bg-hover-color: #70707029;
+    --bg-hover-inverse-color: #000000aa;
+    --font-color: black;
+    --font-tertiary-color: #707070;
+    --accent-light-color: #A18A68;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: var(--font);
+    margin: 0;
+    padding: 0;
+}
