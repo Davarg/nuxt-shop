@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from "#app";
-import { ButtonStyle } from "./components/Common/ButtonStyle";
+import { ButtonStyle } from "./components/common/ButtonStyle";
 
 const { error } = defineProps<{
   error: NuxtError;
@@ -8,7 +8,7 @@ const { error } = defineProps<{
 </script>
 
 <template>
-  <div class="container">
+  <div class="error-container">
     <div class="content">
       <div class="header">
         <div v-if="error.statusCode == 404" class="title">404 ошибка</div>
@@ -29,11 +29,7 @@ const { error } = defineProps<{
 </template>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
-
-.container {
+.error-container {
   width: 100vw;
   height: 100vh;
   background-color: var(--background-color);
@@ -41,7 +37,6 @@ a {
   justify-content: center;
   align-items: center;
   padding: max(16px, 5vw);
-  box-sizing: border-box;
 }
 
 .content {

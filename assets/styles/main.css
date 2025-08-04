@@ -7,11 +7,32 @@
     --font-color: black;
     --font-tertiary-color: #707070;
     --accent-light-color: #A18A68;
+    --border-color: #D8D8D8;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a:visited,
+a:link {
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
     background-color: var(--bg-color);
     font-family: var(--font);
-    margin: 0;
-    padding: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-smoothing: grayscale;
 }
