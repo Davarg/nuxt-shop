@@ -3,14 +3,33 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
   css: ["~/assets/styles/main.css"],
+  routeRules: {
+    "/about": { prerender: true },
+  },
+  app: {
+    pageTransition: {
+      name: "page",
+      mode: "out-in",
+    },
+  },
   icon: {
     customCollections: [
       {
         prefix: "custom",
-        dir: "./assets/icons"
-      }
-    ]
+        dir: "./assets/icons",
+      },
+    ],
   },
-
-  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/image", "@nuxt/scripts", "@nuxt/icon"],
+  runtimeConfig: {
+    public: {
+      apiBase: '',
+    }
+  },
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/image",
+    "@nuxt/scripts",
+    "@nuxt/icon",
+  ],
 });

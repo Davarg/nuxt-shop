@@ -2,7 +2,6 @@
 
 <template>
   <footer class="footer-container">
-    <hr />
     <div class="footer-row">
       <div class="pages">
         <NuxtLink to="#" class="page-link"> Контакты </NuxtLink>
@@ -28,16 +27,13 @@
 </template>
 
 <style scoped>
-hr {
-  height: 1px;
-  background-color: var(--border-color);
-}
-
 .footer-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 15px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
 }
 
 .footer-row {
