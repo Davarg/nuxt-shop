@@ -5,15 +5,15 @@ import Header from './header.vue';
 </script>
 
 <template>
-  <div class="layout-container">
+  <div :class="$style.container">
     <Header />
     <slot />
     <Footer />
   </div>
 </template>
 
-<style scoped>
-.layout-container {
+<style module>
+.container {
     height: calc(100vh - max(16px, 5vw));
     display: flex;
     flex-direction: column;

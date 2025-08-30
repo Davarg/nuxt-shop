@@ -1,20 +1,20 @@
 :root {
-    --font: 'DM Sans', sans-serif;
-    --bg-color: white;
-    --bg-inverse-color: black;
-    --bg-hover-color: #70707029;
-    --bg-hover-inverse-color: #000000aa;
-    --font-color: black;
-    --font-tertiary-color: #707070;
-    --accent-light-color: #A18A68;
-    --border-color: #D8D8D8;
+  --font: "DM Sans", sans-serif;
+  --bg-color: white;
+  --bg-inverse-color: black;
+  --bg-hover-color: #70707029;
+  --bg-hover-inverse-color: #000000aa;
+  --font-color: black;
+  --font-tertiary-color: #707070;
+  --accent-light-color: #a18a68;
+  --border-color: #d8d8d8;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 a,
@@ -30,9 +30,16 @@ a:link {
 }
 
 body {
-    background-color: var(--bg-color);
-    font-family: var(--font);
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-smoothing: grayscale;
+  background-color: var(--bg-color);
+  font-family: var(--font);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-smoothing: grayscale;
+}
+
+h1 {
+  color: var(--font-color);
+  font-weight: 500;
+  font-size: 2.0625rem;
+  line-height: 2.6875rem;
 }

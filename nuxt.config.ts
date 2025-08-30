@@ -23,6 +23,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: '',
+      imgBase: '',
     }
   },
   modules: [
