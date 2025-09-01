@@ -4,12 +4,8 @@ const { options, defaultValue } = defineProps<{
   defaultValue: string;
 }>();
 
-const currentlySelected = ref<string | undefined>();
 const isOptionsOpen = ref<boolean>();
-
-const emit = defineEmits<{
-  (e: "itemSelected", value: number): void
-}>();
+const model = defineModel<string | undefined>()
 
 function onSelectOption(index: number) {
   if (options) {
@@ -17,9 +13,8 @@ function onSelectOption(index: number) {
       return;
     }
 
-    currentlySelected.value = options[index];
+    model.value = options[index];
     isOptionsOpen.value = false;
-    emit("itemSelected", index);
   }
 }
 
@@ -31,7 +26,7 @@ function onSelectOptions() {
 <template>
   <div :class="$style.container">
     <div :class="$style.selection" @click="onSelectOptions">
-      {{ currentlySelected == null ? defaultValue : currentlySelected }}
+      {{ model || defaultValue }}
       <Icon class="icon" name="custom:chevron" size="0.5rem" />
     </div>
     <ul :class="[$style.options, isOptionsOpen && $style.opened]">

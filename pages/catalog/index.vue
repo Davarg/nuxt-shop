@@ -3,50 +3,65 @@ import type { Category } from "~/models/Category";
 import type { Item } from "~/models/Item";
 
 const selectedCategory = ref<Category | undefined>();
-
+const selectedCategoryTitle = ref<string | undefined>();
 const config = useRuntimeConfig();
+const route = useRoute();
+const router = useRouter();
 
-const itemsQuery = computed(() => {
-  if (selectedCategory.value) {
-    return {
-      category_id: selectedCategory.value.id,
-    };
-  } else {
-    return "";
-  }
+const query = computed(() => {
+  return {
+    category_id: route.query.category_id || undefined,
+    limit: route.query.limit ?? 20,
+    offset: route.query.offset ?? 0,
+  };
 });
 
 const { data: categoriesData } = await useFetch<{
   categories: Category[];
 }>(config.public.apiBase + "/categories");
 
-const { data: itemsData, refresh: itemsRefresh } = await useFetch<{
+const { data: itemsData } = await useFetch<{
   products: Item[];
 }>(config.public.apiBase + "/products", {
-  query: itemsQuery,
+  query,
+});
+
+if (route.query.category_id) {
+  if (categoriesData.value?.categories.length) {
+    const item = categoriesData.value.categories.find((item) => {
+      return item.id.toString() == route.query.category_id;
+    });
+
+    if (item) {
+      selectedCategory.value = item;
+      selectedCategoryTitle.value = item.name;
+    }
+  }
+}
+
+watch(
+  () => route.query.category_id,
+  (id) => {
+    if (!id) {
+      selectedCategory.value = undefined;
+      selectedCategoryTitle.value = undefined;
+    }
+  }
+);
+
+watch(selectedCategory, () => {
+  router.replace({ query: { category_id: selectedCategory.value?.id ?? "" } });
+});
+
+watch(selectedCategoryTitle, () => {
+  selectedCategory.value = categoriesData.value?.categories.find((item) => {
+    return item.name === selectedCategoryTitle.value;
+  });
 });
 
 const categoriesNames = computed(() => {
   return categoriesData.value?.categories.map((item) => item.name);
 });
-
-watch(
-  selectedCategory,
-  async () => {
-    itemsRefresh();
-  },
-  { immediate: true }
-);
-
-function onCategorySelected(index: number) {
-  if (categoriesData.value) {
-    if (index >= categoriesData.value.categories.length) {
-      return;
-    }
-
-    selectedCategory.value = categoriesData.value.categories[index];
-  }
-}
 </script>
 
 <template>
@@ -55,10 +70,10 @@ function onCategorySelected(index: number) {
     <div :class="$style.container">
       <div :class="$style.filters">
         <CommonSelect
+          v-model="selectedCategoryTitle"
           :class="$style.categories"
           :options="categoriesNames"
           default-value="Категория"
-          @item-selected="onCategorySelected"
         />
       </div>
       <div :class="$style.content">
