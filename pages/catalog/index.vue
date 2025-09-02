@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { useDebounceFn } from "@vueuse/core";
 import type { Category } from "~/models/Category";
 import type { Item } from "~/models/Item";
 
 const selectedCategory = ref<Category | undefined>();
 const selectedCategoryTitle = ref<string | undefined>();
+const searchText = ref<string | undefined>();
 const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();
@@ -13,6 +15,7 @@ const query = computed(() => {
     category_id: route.query.category_id || undefined,
     limit: route.query.limit ?? 20,
     offset: route.query.offset ?? 0,
+    search: route.query.search || undefined,
   };
 });
 
@@ -25,6 +28,10 @@ const { data: itemsData } = await useFetch<{
 }>(config.public.apiBase + "/products", {
   query,
 });
+
+if (route.query.search) {
+  searchText.value = route.query.search.toString();
+}
 
 if (route.query.category_id) {
   if (categoriesData.value?.categories.length) {
@@ -39,18 +46,33 @@ if (route.query.category_id) {
   }
 }
 
-watch(
-  () => route.query.category_id,
-  (id) => {
-    if (!id) {
-      selectedCategory.value = undefined;
-      selectedCategoryTitle.value = undefined;
-    }
-  }
-);
+watchEffect(() => {
+  const { category_id, search } = route.query;
 
-watch(selectedCategory, () => {
-  router.replace({ query: { category_id: selectedCategory.value?.id ?? "" } });
+  if (!category_id) {
+    selectedCategory.value = undefined;
+    selectedCategoryTitle.value = undefined;
+  }
+
+  if (!search) {
+    searchText.value = undefined;
+  }
+});
+
+const changeRoute = useDebounceFn((category_id, search) => {
+  router.replace({
+    query: {
+      category_id: category_id,
+      search: search,
+    },
+  });
+}, 100);
+
+watch([selectedCategory, searchText], () => {
+  changeRoute(
+    selectedCategory.value?.id || undefined,
+    searchText.value || undefined
+  );
 });
 
 watch(selectedCategoryTitle, () => {
@@ -69,6 +91,7 @@ const categoriesNames = computed(() => {
     <h1>Каталог товаров</h1>
     <div :class="$style.container">
       <div :class="$style.filters">
+        <CommonSearchInput v-model="searchText" placeholder="Поиск..." />
         <CommonSelect
           v-model="selectedCategoryTitle"
           :class="$style.categories"
@@ -104,6 +127,7 @@ const categoriesNames = computed(() => {
 .filters {
   display: flex;
   flex-direction: column;
+  width: 16.3125rem;
 }
 
 .content {
@@ -116,6 +140,6 @@ const categoriesNames = computed(() => {
 }
 
 .categories {
-  width: 16.3125rem;
+  margin-top: 39px;
 }
 </style>

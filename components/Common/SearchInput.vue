@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import ArrowIcon from "~/assets/icons/ArrowIcon.vue";
-
 const model = defineModel<string | undefined>();
-const { withAccessory, placeholder } = defineProps<{
-  withAccessory: boolean;
+const { placeholder } = defineProps<{
   placeholder: string;
 }>();
 </script>
 
 <template>
-  <div class="input-container" :class="{ withAccessory: withAccessory }">
-    <input v-model="model" class="input" :placeholder="placeholder" />
-    <ArrowIcon v-if="withAccessory" />
+  <div :class="$style.input_container">
+    <input v-model="model" :class="$style.input" :placeholder="placeholder" />
+    <Icon name="simple-line-icons:magnifier" size="1.125rem" />
   </div>
 </template>
 
-<style scoped>
-.input-container {
+<style module>
+.input_container {
   border-bottom: 1px solid var(--border-color);
   display: flex;
   flex-direction: row;
@@ -38,9 +35,5 @@ const { withAccessory, placeholder } = defineProps<{
 
 .input::placeholder {
   color: var(--font-tertiary-color);
-}
-
-.withAccessory {
-  border-bottom: 1px solid black;
 }
 </style>
