@@ -2,6 +2,8 @@
 import type { Item } from "~/models/Item";
 
 const config = useRuntimeConfig();
+const isFavIconHovered = ref<boolean>(false);
+const favoritesStore = useFavoritesStore();
 
 const { item, isFavorite, to } = defineProps<{
   item: Item;
@@ -36,15 +38,28 @@ const imageStyle = computed(() => ({
   justifyContent: item.discount > 0 ? "space-between" : "flex-end",
   padding: "16px",
 }));
+
+function onFavClick() {
+  favoritesStore.toggleItem(item.id);
+}
 </script>
 
 <template>
   <NuxtLink :to="to" :class="$style.container">
-    <div :style="imageStyle">
+    <div
+      :style="imageStyle"
+      @mouseenter="isFavIconHovered = true"
+      @mouseleave="isFavIconHovered = false"
+    >
       <div v-if="item.discount > 0" :class="$style.discount">
         {{ `- ${item.discount}%` }}
       </div>
-      <Icon v-if="isFavorite" :class="$style.favorite" name="custom:favorite" />
+      <Icon
+        v-show="isFavorite || isFavIconHovered"
+        :class="$style.favorite"
+        name="custom:favorite"
+        @click.stop.prevent="onFavClick"
+      />
     </div>
     <div :class="$style.title">{{ item.short_description }}</div>
     <div :class="$style.price">{{ price }}</div>

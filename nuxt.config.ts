@@ -22,9 +22,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: '',
-      imgBase: '',
-    }
+      apiBase: "",
+      imgBase: "",
+    },
   },
   modules: [
     "@nuxt/eslint",
@@ -33,5 +33,6 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/icon",
     "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
   ],
 });

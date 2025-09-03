@@ -9,6 +9,7 @@ const searchText = ref<string | undefined>();
 const config = useRuntimeConfig();
 const route = useRoute();
 const router = useRouter();
+const favoritesStore = useFavoritesStore();
 
 const query = computed(() => {
   return {
@@ -104,7 +105,7 @@ const categoriesNames = computed(() => {
           v-for="(item, index) in itemsData?.products"
           :key="index"
           :item="item"
-          :is-favorite="false"
+          :is-favorite="favoritesStore.items.includes(item.id)"
           :to="`/catalog/${item.id}`"
         />
       </div>
