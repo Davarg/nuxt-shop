@@ -18,7 +18,7 @@
         <div class="header-nav-border"></div>
       </div>
       <div class="header-nav-icons">
-        <NuxtLink to="/" class="header-nav-icon">
+        <NuxtLink to="/search" class="header-nav-icon">
           <Icon name="simple-line-icons:magnifier" size="1.3125rem" />
         </NuxtLink>
         <NuxtLink to="/cart" class="header-nav-icon">

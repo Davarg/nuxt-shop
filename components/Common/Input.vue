@@ -2,15 +2,21 @@
 import ArrowIcon from "~/assets/icons/ArrowIcon.vue";
 
 const model = defineModel<string | undefined>();
-const { withAccessory, placeholder } = defineProps<{
+const { withAccessory, placeholder, type = undefined } = defineProps<{
   withAccessory: boolean;
   placeholder: string;
+  type?: string | undefined;
 }>();
 </script>
 
 <template>
   <div class="input-container" :class="{ withAccessory: withAccessory }">
-    <input v-model="model" class="input" :placeholder="placeholder" />
+    <input
+      v-model="model"
+      class="input"
+      :placeholder="placeholder"
+      :type="type"
+    />
     <ArrowIcon v-if="withAccessory" />
   </div>
 </template>
