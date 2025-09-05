@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import type { Item } from "~/models/Item";
 
+useSeoMeta({
+  title: "Любимки",
+  description: "Котаны, это то, что вы любите",
+  ogDescription: "Котаны, это то, что вы любите",
+});
+
 const favoritesStore = useFavoritesStore();
 const config = useRuntimeConfig();
 

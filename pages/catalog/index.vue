@@ -3,6 +3,12 @@ import { useDebounceFn } from "@vueuse/core";
 import type { Category } from "~/models/Category";
 import type { Item } from "~/models/Item";
 
+useSeoMeta({
+  title: "Каталожек товарчиков",
+  description: "Котаны, это каталог моих любимых ювелирных товаров",
+  ogDescription: "Котаны, это каталог моих любимых ювелирных товаров",
+});
+
 const selectedCategory = ref<Category | undefined>();
 const selectedCategoryTitle = ref<string | undefined>();
 const searchText = ref<string | undefined>();

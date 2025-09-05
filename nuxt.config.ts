@@ -6,7 +6,27 @@ export default defineNuxtConfig({
   routeRules: {
     "/about": { prerender: true },
   },
+  robots: {
+    disallow: [
+      "/auth/login",
+      "/auth/registration",
+      "/auth/restore",
+      "/profile/index",
+      "/cart",
+      "/favorites",
+    ],
+  },
+  sitemap: {
+    sources: ["/api/sitemap/urls"],
+  },
   app: {
+    head: {
+      title: "Магазинчик Бо",
+      titleTemplate: "%s ∰ Магазинчик Бо",
+      htmlAttrs: {
+        lang: "ru",
+      },
+    },
     pageTransition: {
       name: "page",
       mode: "out-in",
@@ -34,5 +54,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
   ],
 });
